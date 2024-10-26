@@ -1,5 +1,7 @@
-package MedicalService.demo.entity.desease;
+package MedicalService.demo.entity.disease;
 
+import MedicalService.demo.entity.icd.ICD;
+import MedicalService.demo.entity.patient.Patient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,11 +41,11 @@ public class Disease {
 
     @ManyToOne
     @JoinColumn(name = "icd_code", nullable = false)
-    private String icdCode;
+    private ICD icdCode;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private long patientId;
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patientId;
 
     @Column(name = "description", length = 2048, nullable = false)
     private String description;

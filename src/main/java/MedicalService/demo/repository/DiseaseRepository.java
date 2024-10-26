@@ -1,6 +1,6 @@
 package MedicalService.demo.repository;
 
-import MedicalService.demo.entity.desease.Disease;
+import MedicalService.demo.entity.disease.Disease;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

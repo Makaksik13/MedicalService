@@ -16,7 +16,7 @@ public class AsyncConfig {
     private final AsyncProperty asyncProperty;
 
     @Bean(name = "ICDExecutor")
-    public Executor ICDExecutor(@Value("${async.settings.icd}") String key) {
+    public Executor ICDExecutor(@Value("${async.settings.icd.name}") String key) {
         AsyncProperty.AsyncSettings asyncSetting = asyncProperty.getSettings().get(key);
 
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
