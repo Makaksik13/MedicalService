@@ -8,6 +8,7 @@ import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.input.BOMInputStream;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Slf4j
 public class DefaultCsvParser<T> extends CsvParser<T> {
 
     public DefaultCsvParser(Class<T> clazz) {
@@ -25,7 +27,7 @@ public class DefaultCsvParser<T> extends CsvParser<T> {
     }
 
     @Override
-    public List<T> parse(InputStream input) throws IOException {
+    public List<T> parse(InputStream input) {
         MappingStrategy<T> mappingStrategy = this.getMappingStrategy();
 
         try (Reader reader = new InputStreamReader(new BOMInputStream(input), StandardCharsets.UTF_8)) {
@@ -39,11 +41,14 @@ public class DefaultCsvParser<T> extends CsvParser<T> {
                     .build();
 
             return csvToBean.parse();
+        } catch (IOException e){
+            log.error("Exception was caught", e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void beanToCSV(List<T> applications, Writer writer) throws IOException {
+    public void beanToCSV(List<T> applications, Writer writer){
         try (writer) {
             var builder = new StatefulBeanToCsvBuilder<T>(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
@@ -51,7 +56,8 @@ public class DefaultCsvParser<T> extends CsvParser<T> {
                     .build();
 
             builder.write(applications);
-        } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+        } catch (CsvRequiredFieldEmptyException | CsvDataTypeMismatchException | IOException e) {
+            log.error("Exception was caught", e);
             throw new RuntimeException(e);
         }
     }

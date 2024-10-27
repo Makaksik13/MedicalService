@@ -1,10 +1,12 @@
 package MedicalService.demo.entity.patient;
 
+import MedicalService.demo.entity.disease.Disease;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -47,4 +50,7 @@ public class Patient {
 
     @Column(name = "policy_number", length = 16, nullable = false, unique = true)
     private String policyNumber;
+
+    @OneToMany(mappedBy = "patientId")
+    private List<Disease> diseases;
 }

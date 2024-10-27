@@ -1,7 +1,7 @@
 package MedicalService.demo.scheduler;
 
-import MedicalService.demo.entity.icd.ICD;
-import MedicalService.demo.repository.ICDRepository;
+import MedicalService.demo.entity.icd.Icd;
+import MedicalService.demo.repository.IcdRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,8 +36,8 @@ public class ICDScheduler {
     @Value("${batch.icd.size}")
     private int batchSize;
 
-    private final RestTemplate restTemplate;
-    private final ICDRepository icdRepository;
+    private final RestTemplate CsvRestTemplate;
+    private final IcdRepository icdRepository;
     private final Executor ICDExecutor;
 
     @CacheEvict(value = "icd", allEntries = true)
@@ -49,14 +49,14 @@ public class ICDScheduler {
         headers.setAccept(Collections.singletonList(MediaType.TEXT_PLAIN));
 
         HttpEntity<Void> request = new HttpEntity<>(headers);
-        ResponseEntity<List<ICD>> response = this.restTemplate.exchange(
+        ResponseEntity<List<Icd>> response = this.CsvRestTemplate.exchange(
                 urlToICDs,
                 HttpMethod.GET,
                 request,
                 new ParameterizedTypeReference<>(){}
         );
 
-        List<ICD> icds = response.getBody();
+        List<Icd> icds = response.getBody();
         if(icds != null && icds.size() > batchSize){
             ListUtils.partition(icds, batchSize).forEach(sublist->
                     CompletableFuture.runAsync(()-> icdRepository.deleteAll(sublist), ICDExecutor)

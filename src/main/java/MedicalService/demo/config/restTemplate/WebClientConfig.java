@@ -1,7 +1,7 @@
 package MedicalService.demo.config.restTemplate;
 
 import MedicalService.demo.converter.CsvHttpMessageConverter;
-import MedicalService.demo.entity.icd.ICD;
+import MedicalService.demo.entity.icd.Icd;
 import MedicalService.demo.parser.CsvParser;
 import MedicalService.demo.parser.DefaultCsvParser;
 import org.springframework.context.annotation.Bean;
@@ -13,20 +13,19 @@ import org.springframework.web.client.RestTemplate;
 public class WebClientConfig {
 
     @Bean
-    public CsvParser<ICD> csvParser() {
-        return new DefaultCsvParser<>(ICD.class);
+    public CsvParser<Icd> csvParser() {
+        return new DefaultCsvParser<>(Icd.class);
     }
 
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate CsvRestTemplate(CsvParser<Icd> csvParser) {
         RestTemplate result = new RestTemplate();
-        CsvHttpMessageConverter<ICD> messageConverter = new CsvHttpMessageConverter<>(
+        CsvHttpMessageConverter<Icd> messageConverter = new CsvHttpMessageConverter<>(
                 MediaType.ALL,
-                this.csvParser()
+                csvParser
         );
 
         result.getMessageConverters().add(messageConverter);
         return result;
     }
-
 }

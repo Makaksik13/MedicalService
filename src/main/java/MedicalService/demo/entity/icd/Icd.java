@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "icd")
-public class ICD {
+public class Icd {
 
     @Id
     @Column(name = "code", length = 5)

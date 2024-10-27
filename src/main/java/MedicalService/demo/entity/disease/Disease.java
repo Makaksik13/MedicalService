@@ -1,6 +1,6 @@
 package MedicalService.demo.entity.disease;
 
-import MedicalService.demo.entity.icd.ICD;
+import MedicalService.demo.entity.icd.Icd;
 import MedicalService.demo.entity.patient.Patient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -41,9 +42,9 @@ public class Disease {
 
     @ManyToOne
     @JoinColumn(name = "icd_code", nullable = false)
-    private ICD icdCode;
+    private Icd icdCode;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patientId;
 
