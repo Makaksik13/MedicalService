@@ -1,6 +1,5 @@
 package MedicalService.demo.dto.disease;
 
-import MedicalService.demo.entity.icd.Icd;
 import MedicalService.demo.entity.patient.Patient;
 import MedicalService.demo.validation.Marker;
 import jakarta.validation.Valid;
