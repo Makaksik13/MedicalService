@@ -1,4 +1,4 @@
-package MedicalService.demo.entity.patient;
+package MedicalService.demo.model.entity.patient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

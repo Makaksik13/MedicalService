@@ -1,6 +1,6 @@
-package MedicalService.demo.service;
+package MedicalService.demo.service.patient;
 
-import MedicalService.demo.dto.patient.PatientDto;
+import MedicalService.demo.model.dto.patient.PatientDto;
 
 public interface PatientService {
 

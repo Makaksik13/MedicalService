@@ -1,19 +1,16 @@
-package MedicalService.demo.service;
+package MedicalService.demo.service.patient;
 
-import MedicalService.demo.dto.patient.PatientDto;
-import MedicalService.demo.entity.patient.Patient;
 import MedicalService.demo.exception.NotFoundException;
 import MedicalService.demo.mapper.patient.PatientMapper;
+import MedicalService.demo.model.dto.patient.PatientDto;
+import MedicalService.demo.model.entity.patient.Patient;
 import MedicalService.demo.repository.PatientRepository;
-import MedicalService.demo.validation.Marker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 @Service
 @Slf4j
-@Validated
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
@@ -22,15 +19,13 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDto getById(long patientId){
-        Patient patient = patientRepository.findById(patientId)
-                .orElseThrow(() -> new NotFoundException(String.format("Post with id %s not found", patientId)));
+        Patient patient = findPatientById(patientId);
 
         log.info("A patient with an id {} has been received", patientId);
         return patientMapper.toDto(patient);
     }
 
     @Override
-    @Validated({Marker.OnCreate.class})
     public PatientDto create(PatientDto patientDto){
         Patient patient = patientRepository.save(patientMapper.toEntity(patientDto));
 
@@ -39,9 +34,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    @Validated({Marker.OnUpdate.class})
     public PatientDto update(PatientDto patientDto) {
-        Patient patient = patientRepository.save(patientMapper.toEntity(patientDto));
+        Patient patient = findPatientById(patientDto.getId());
+        patientMapper.update(patient, patientDto);
 
         log.info("A patient with an id {} has been updated", patient.getId());
         return patientMapper.toDto(patient);
@@ -49,8 +44,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void deleteById(long patientId) {
+        Patient patient = findPatientById(patientId);
         patientRepository.deleteById(patientId);
 
         log.info("A patient with an id {} has been deleted", patientId);
+    }
+
+    private Patient findPatientById(long id) {
+        return patientRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Patient with id %s not found", id)));
     }
 }

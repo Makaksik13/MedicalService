@@ -1,6 +1,6 @@
 package MedicalService.demo.scheduler;
 
-import MedicalService.demo.entity.icd.Icd;
+import MedicalService.demo.model.entity.icd.Icd;
 import MedicalService.demo.repository.IcdRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
@@ -28,7 +28,7 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor
 @Async("ICDExecutor")
 @Component
-public class ICDScheduler {
+public class IcdScheduler {
 
     @Value("${sources.url.ICDs}")
     private String urlToICDs;

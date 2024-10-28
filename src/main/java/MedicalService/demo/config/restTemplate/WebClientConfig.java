@@ -1,7 +1,7 @@
 package MedicalService.demo.config.restTemplate;
 
 import MedicalService.demo.converter.CsvHttpMessageConverter;
-import MedicalService.demo.entity.icd.Icd;
+import MedicalService.demo.model.entity.icd.Icd;
 import MedicalService.demo.parser.CsvParser;
 import MedicalService.demo.parser.DefaultCsvParser;
 import org.springframework.context.annotation.Bean;

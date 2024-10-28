@@ -1,6 +1,6 @@
 package MedicalService.demo.repository;
 
-import MedicalService.demo.entity.icd.Icd;
+import MedicalService.demo.model.entity.icd.Icd;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package MedicalService.demo.converter;
 
-import MedicalService.demo.entity.patient.Gender;
+import MedicalService.demo.model.entity.patient.Gender;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

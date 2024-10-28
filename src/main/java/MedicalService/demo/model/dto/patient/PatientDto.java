@@ -1,10 +1,8 @@
-package MedicalService.demo.dto.patient;
+package MedicalService.demo.model.dto.patient;
 
-import MedicalService.demo.dto.disease.DiseaseDto;
-import MedicalService.demo.entity.patient.Gender;
+import MedicalService.demo.model.entity.patient.Gender;
 import MedicalService.demo.validation.Marker;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -14,7 +12,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Schema(description = "Сущность пациента")
 @Data
@@ -49,7 +46,4 @@ public class PatientDto {
     @Schema(description = "Номер полиса ОМС", example = "1234567891234567", minLength = 16, maxLength = 16)
     @Pattern(regexp = "\\d{16}", message = "The policy number '${validatedValue}' must consist of only 16 digits")
     private String policyNumber;
-
-    @Schema(description = "Перечень заболеваний")
-    private List<@Valid DiseaseDto> diseases;
 }

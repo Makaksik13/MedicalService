@@ -18,6 +18,9 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
 
+springdoc:
+  override-with-generic-response: false
+
 server:
   port: 8080
 

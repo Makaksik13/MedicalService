@@ -1,4 +1,4 @@
-package MedicalService.demo.entity.icd;
+package MedicalService.demo.model.entity.icd;
 
 import com.opencsv.bean.CsvBindByPosition;
 import jakarta.persistence.Column;
