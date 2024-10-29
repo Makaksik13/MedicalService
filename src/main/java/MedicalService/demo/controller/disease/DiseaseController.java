@@ -3,6 +3,9 @@ package MedicalService.demo.controller.disease;
 import MedicalService.demo.model.dto.disease.DiseaseDto;
 import MedicalService.demo.exception.response.ErrorResponse;
 import MedicalService.demo.exception.response.ValidationErrorResponse;
+import MedicalService.demo.model.entity.disease.Disease;
+import MedicalService.demo.repository.IcdRepository;
+import MedicalService.demo.scheduler.IcdScheduler;
 import MedicalService.demo.service.disease.DiseaseService;
 import MedicalService.demo.validation.Marker;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,7 +54,7 @@ public class DiseaseController {
             long patientId
 
     ){
-        return diseaseService.getByPatientIdAndDiseaseId(diseaseId, patientId);
+        return diseaseService.getByIdAndPatientId(diseaseId, patientId);
     }
 
     @ApiResponse(responseCode = "400",
@@ -103,6 +106,6 @@ public class DiseaseController {
             @Parameter(description = "Идентификатор пациента", required = true, example = "1")
             long patientId
     ){
-        diseaseService.deleteById(diseaseId, patientId);
+        diseaseService.deleteByIdAndPatientId(diseaseId, patientId);
     }
 }

@@ -11,14 +11,14 @@ import org.mapstruct.ReportingPolicy;
 public interface DiseaseMapper {
 
     @Mapping(source = "patientId", target = "patient.id")
-    @Mapping(source = "name", target = "icdCode.name")
+    @Mapping(source = "code", target = "icd.code")
     Disease toEntity(DiseaseDto diseaseDto);
 
     @Mapping(source = "patient.id", target = "patientId")
-    @Mapping(source = "icdCode.name", target = "name")
+    @Mapping(source = "icd.code", target = "code")
     DiseaseDto toDto(Disease disease);
 
     @Mapping(source = "patientId", target = "patient.id")
-    @Mapping(source = "name", target = "icdCode.name")
+    @Mapping(source = "code", target = "icd.code")
     void update(@MappingTarget Disease disease, DiseaseDto diseaseDto);
 }

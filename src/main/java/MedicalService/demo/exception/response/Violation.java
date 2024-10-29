@@ -1,9 +1,9 @@
 package MedicalService.demo.exception.response;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@Getter
+@Data
 @RequiredArgsConstructor
 public class Violation {
 

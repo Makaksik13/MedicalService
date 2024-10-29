@@ -35,12 +35,9 @@ public class IcdController {
     public Page<IcdDto> getAll(
             @Parameter(description = "Страница", example = "0")
             @RequestParam(value = "offset", defaultValue = "0") @Min(0)
-            Integer offset,
-            @Parameter(description = "Размер страницы", example = "20")
-            @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(100)
-            Integer limit
+            Integer offset
     ) {
-        return icdService.findAll(offset, limit);
+        return icdService.findAll(offset);
     }
 
 }

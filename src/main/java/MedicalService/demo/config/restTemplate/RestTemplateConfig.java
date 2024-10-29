@@ -10,7 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class WebClientConfig {
+public class RestTemplateConfig {
 
     @Bean
     public CsvParser<Icd> csvParser() {

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @Validated
-@RequestMapping("/patient")
+@RequestMapping(value = "/patient", produces = { "application/json; charset=UTF-8" })
 public class PatientController {
 
     private final PatientService patientService;
@@ -44,7 +45,7 @@ public class PatientController {
     @GetMapping("{patientId}")
     public PatientDto getPatient(
             @PathVariable @Parameter(description = "Идентификатор пациента", required = true, example = "1")
-            long patientId
+            @Min(0) long patientId
     ){
         return patientService.getById(patientId);
     }
@@ -82,7 +83,7 @@ public class PatientController {
             description = "Позволяет удалить пациента"
     )
     @DeleteMapping("{patientId}")
-    public void deletePatient(@PathVariable long patientId){
+    public void deletePatient(@PathVariable @Min(0)long patientId){
         patientService.deleteById(patientId);
     }
 }

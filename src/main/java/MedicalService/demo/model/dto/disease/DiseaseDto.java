@@ -8,11 +8,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Schema(description = "Сущность болезни")
+@Builder
 @Data
 public class DiseaseDto {
 
@@ -22,6 +24,7 @@ public class DiseaseDto {
     private Long id;
 
     @Schema(description = "Дата начала заболевания")
+    @NotNull(message = "The start of disease must be not null")
     @PastOrPresent(message = "The starting '${validatedValue}' must not be in the future")
     private LocalDate starting;
 
@@ -29,13 +32,12 @@ public class DiseaseDto {
     @PastOrPresent(message = "The ending '${validatedValue}' must not be in the future")
     private LocalDate ending;
 
-    @Schema(description = "Название болезни", example = "Брюшной тиф")
-    @NotBlank(message = "The name '${validatedValue}' must be not blank")
-    @Size(max = 256, message = "The description '${validatedValue}' must be no more than {max}")
-    private String name;
+    @Schema(description = "Код болезни", example = "A00.0")
+    @NotBlank(message = "The code '${validatedValue}' must be not blank")
+    @Size(max = 8, message = "The code '${validatedValue}' must be no more than {max}")
+    private String code;
 
     @Schema(description = "Идентификатор заболевшего")
-    @Valid
     private long patientId;
 
     @Schema(description = "Назначения")

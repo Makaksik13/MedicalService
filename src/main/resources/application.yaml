@@ -43,3 +43,8 @@ sources:
 batch:
   icd:
     size: 500
+
+page:
+  icd:
+    size: 20
+

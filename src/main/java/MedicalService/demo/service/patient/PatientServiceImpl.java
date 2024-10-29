@@ -37,6 +37,7 @@ public class PatientServiceImpl implements PatientService {
     public PatientDto update(PatientDto patientDto) {
         Patient patient = findPatientById(patientDto.getId());
         patientMapper.update(patient, patientDto);
+        patientRepository.save(patient);
 
         log.info("A patient with an id {} has been updated", patient.getId());
         return patientMapper.toDto(patient);

@@ -9,12 +9,18 @@ import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Schema(description = "Сущность пациента")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PatientDto {
 
     @Schema(description = "Идентификатор", example = "1")
@@ -36,7 +42,7 @@ public class PatientDto {
     private String patronymic;
 
     @Schema(description = "Пол человека")
-    @NotNull(message = "The gender '${validatedValue}' must be not null")
+    @NotNull(message = "The gender must be not null")
     private Gender gender;
 
     @Schema(description = "Дата рождения")

@@ -1,9 +1,9 @@
-CREATE TABLE icd(
+CREATE TABLE IF NOT EXISTS icd(
     code VARCHAR(8) PRIMARY KEY,
-    name VARCHAR(256) NOT NULL
+    name VARCHAR(512) NOT NULL
 );
 
-CREATE TABLE patients (
+CREATE TABLE IF NOT EXISTS patients (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
     name varchar(64) NOT NULL,
     surname varchar(128) NOT NULL,
@@ -16,11 +16,11 @@ CREATE TABLE patients (
     CONSTRAINT birth_date_check CHECK (birth_date <= CURRENT_DATE)
 );
 
-CREATE TABLE disease (
+CREATE TABLE IF NOT EXISTS disease (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
     starting DATE NOT NULL,
     ending DATE DEFAULT NULL,
-    icd_code VARCHAR(5) NOT NULL,
+    icd_code VARCHAR(8) NOT NULL,
     patient_id bigint NOT NULL,
     description VARCHAR(2048) NOT NULL,
 

@@ -18,7 +18,7 @@ public class DiseaseServiceImpl implements DiseaseService{
     private final DiseaseMapper diseaseMapper;
 
     @Override
-    public DiseaseDto getByPatientIdAndDiseaseId(long patientId, long diseaseId){
+    public DiseaseDto getByIdAndPatientId(long diseaseId, long patientId){
         Disease disease = findDiseaseByIdAndPatientId(diseaseId, patientId);
 
         log.info("A disease with an id {} in the patient with id {} has been received", diseaseId, patientId);
@@ -38,13 +38,14 @@ public class DiseaseServiceImpl implements DiseaseService{
     public DiseaseDto update(DiseaseDto diseaseDto, long patientId) {
         Disease disease = findDiseaseByIdAndPatientId(diseaseDto.getId(), patientId);
         diseaseMapper.update(disease, diseaseDto);
+        diseaseRepository.save(disease);
 
         log.info("A disease with an id {} in the patient with id {} has been updated", disease.getId(), patientId);
         return diseaseMapper.toDto(disease);
     }
 
     @Override
-    public void deleteById(long diseaseId, long patientId) {
+    public void deleteByIdAndPatientId(long diseaseId, long patientId) {
         Disease disease = findDiseaseByIdAndPatientId(diseaseId, patientId);
         diseaseRepository.deleteById(diseaseId);
 

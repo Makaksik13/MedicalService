@@ -5,5 +5,5 @@ import org.springframework.data.domain.Page;
 
 public interface IcdService {
 
-    Page<IcdDto> findAll(int offset, int limit);
+    Page<IcdDto> findAll(int offset);
 }

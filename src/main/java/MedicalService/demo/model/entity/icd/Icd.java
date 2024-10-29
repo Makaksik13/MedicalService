@@ -19,12 +19,11 @@ import lombok.NoArgsConstructor;
 public class Icd {
 
     @Id
-    @Column(name = "code", length = 5)
+    @Column(name = "code", length = 8)
     @CsvBindByPosition(position = 2)
     private String code;
 
     @Column(name = "name", length = 256, nullable = false)
     @CsvBindByPosition(position = 3)
     private String name;
-
 }

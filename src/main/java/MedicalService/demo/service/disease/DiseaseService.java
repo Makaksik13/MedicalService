@@ -4,11 +4,11 @@ import MedicalService.demo.model.dto.disease.DiseaseDto;
 
 public interface DiseaseService {
 
-    DiseaseDto getByPatientIdAndDiseaseId(long patientId, long diseaseId);
+    DiseaseDto getByIdAndPatientId(long diseaseId, long patientId);
 
     DiseaseDto create(DiseaseDto diseaseDto, long patientId);
 
     DiseaseDto update(DiseaseDto diseaseDto, long patientId);
 
-    void deleteById(long diseaseId, long patientId);
+    void deleteByIdAndPatientId(long diseaseId, long patientId);
 }
