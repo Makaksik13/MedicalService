@@ -1,11 +1,8 @@
 package MedicalService.demo.controller.disease;
 
-import MedicalService.demo.model.dto.disease.DiseaseDto;
 import MedicalService.demo.exception.response.ErrorResponse;
 import MedicalService.demo.exception.response.ValidationErrorResponse;
-import MedicalService.demo.model.entity.disease.Disease;
-import MedicalService.demo.repository.IcdRepository;
-import MedicalService.demo.scheduler.IcdScheduler;
+import MedicalService.demo.model.dto.disease.DiseaseDto;
 import MedicalService.demo.service.disease.DiseaseService;
 import MedicalService.demo.validation.Marker;
 import io.swagger.v3.oas.annotations.Operation;

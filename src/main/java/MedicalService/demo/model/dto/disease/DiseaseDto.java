@@ -2,7 +2,6 @@ package MedicalService.demo.model.dto.disease;
 
 import MedicalService.demo.validation.Marker;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;

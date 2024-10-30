@@ -79,11 +79,14 @@ public class PatientControllerTest extends SpringContextTest {
                 .policyNumber("qw")
                 .build();
 
-        violations.add(new Violation("birthDate", "The date of birth '" + invalidDate+ "' must not be in the future"));
-        violations.add(new Violation("gender", "The gender must be not null"));
-        violations.add(new Violation("name", "The name '" + fullInvalidPatientDto.getName() +"' must be not blank"));
-        violations.add(new Violation("policyNumber", "The policy number '"+fullInvalidPatientDto.getPolicyNumber()+"' must consist of only 16 digits"));
-        violations.add(new Violation("surname", "The surname '" + fullInvalidPatientDto.getSurname() + "' must be not blank"));
+        violations.addAll(List.of(
+                new Violation("birthDate", "The date of birth '" + invalidDate+ "' must not be in the future"),
+                new Violation("gender", "The gender must be not null"),
+                new Violation("name", "The name '" + fullInvalidPatientDto.getName() +"' must be not blank"),
+                new Violation("policyNumber", "The policy number '"+fullInvalidPatientDto.getPolicyNumber()+"' must consist of only 16 digits"),
+                new Violation("surname", "The surname '" + fullInvalidPatientDto.getSurname() + "' must be not blank")
+                )
+        );
     }
 
     @Test

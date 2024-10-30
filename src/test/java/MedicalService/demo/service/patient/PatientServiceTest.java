@@ -45,35 +45,18 @@ public class PatientServiceTest {
     private PatientDto actualPatientDto;
 
     @BeforeEach
-    public void init(){
-        actualPatient = Patient.builder()
-                .id(1L)
-                .name("Иван")
-                .surname("Иванов")
-                .patronymic("Иванович")
-                .birthDate(LocalDate.of(2000, Month.MAY, 14))
-                .gender(Gender.MALE)
-                .policyNumber("1234123412341234")
-                .build();
+    public void init() {
+        actualPatient = Patient.builder().id(1L).name("Иван").surname("Иванов").patronymic("Иванович").birthDate(LocalDate.of(2000, Month.MAY, 14)).gender(Gender.MALE).policyNumber("1234123412341234").build();
 
-        actualPatientDto = PatientDto.builder()
-                .id(1L)
-                .name("Иван")
-                .surname("Иванов")
-                .patronymic("Иванович")
-                .birthDate(LocalDate.of(2000, Month.MAY, 14))
-                .gender(Gender.MALE)
-                .policyNumber("1234123412341234")
-                .build();
+        actualPatientDto = PatientDto.builder().id(1L).name("Иван").surname("Иванов").patronymic("Иванович").birthDate(LocalDate.of(2000, Month.MAY, 14)).gender(Gender.MALE).policyNumber("1234123412341234").build();
     }
 
     @Nested
-    @DisplayName("Штатные случаи")
-    class RegularCases{
+    class GetDesign {
 
         @Test
-        @DisplayName("getById()")
-        public void testGetByIdWithSuccessfulGetting(){
+        @DisplayName("удаление существующего пациента")
+        public void testGetByIdWithSuccessfulGetting() {
             when(patientRepository.findById(actualPatient.getId())).thenReturn(Optional.of(actualPatient));
 
             PatientDto patientDto = patientService.getById(actualPatient.getId());
@@ -85,8 +68,22 @@ public class PatientServiceTest {
         }
 
         @Test
-        @DisplayName("create()")
-        public void testCreateWithSuccessfulCreation(){
+        @DisplayName("попытка удалить отсутствующего пациента")
+        public void testGetByIdWithNotFoundUser(){
+            when(patientRepository.findById(actualPatient.getId())).thenReturn(Optional.empty());
+
+            var exception = assertThrows(NotFoundException.class, ()-> patientService.getById(actualPatient.getId()));
+
+            assertEquals(String.format("Patient with id %s not found", actualPatient.getId()), exception.getMessage());
+        }
+    }
+
+    @Nested
+    class PostDesign {
+
+        @Test
+        @DisplayName("создание пациента")
+        public void testCreateWithSuccessfulCreation() {
             when(patientRepository.save(actualPatient)).thenReturn(actualPatient);
 
             PatientDto createdPatient = patientService.create(actualPatientDto);
@@ -97,10 +94,14 @@ public class PatientServiceTest {
             inOrder.verify(patientMapper, times(1)).toDto(actualPatient);
             assertEquals(actualPatientDto, createdPatient);
         }
+    }
+
+    @Nested
+    class PutDesign {
 
         @Test
-        @DisplayName("update()")
-        public void testUpdateWithSuccessfulUpdating(){
+        @DisplayName("обновление пациента")
+        public void testUpdateWithSuccessfulUpdating() {
             when(patientRepository.findById(actualPatientDto.getId())).thenReturn(Optional.of(actualPatient));
 
             PatientDto updatedPatient = patientService.update(actualPatientDto);
@@ -114,8 +115,22 @@ public class PatientServiceTest {
         }
 
         @Test
-        @DisplayName("deleteById()")
-        public void testDeleteByIdWithSuccessfulDeleting(){
+        @DisplayName("попытка обновить несуществующего пациента")
+        public void testUpdateWithNotFoundPatient() {
+            when(patientRepository.findById(actualPatientDto.getId())).thenReturn(Optional.empty());
+
+            var exception = assertThrows(NotFoundException.class, () -> patientService.update(actualPatientDto));
+
+            assertEquals(String.format("Patient with id %s not found", actualPatient.getId()), exception.getMessage());
+        }
+    }
+
+    @Nested
+    class DeleteDesign {
+
+        @Test
+        @DisplayName("удаление пациента")
+        public void testDeleteByIdWithSuccessfulDeleting() {
             when(patientRepository.findById(actualPatientDto.getId())).thenReturn(Optional.of(actualPatient));
             doNothing().when(patientRepository).deleteById(actualPatientDto.getId());
 
@@ -125,42 +140,15 @@ public class PatientServiceTest {
             inOrder.verify(patientRepository, times(1)).findById(actualPatientDto.getId());
             inOrder.verify(patientRepository, times(1)).deleteById(actualPatientDto.getId());
         }
-    }
-
-    @Nested
-    @DisplayName("Ошибочные случаи")
-    class ErrorCases{
 
         @Test
-        @DisplayName("delete() с отсутствующим пациентом")
-        public void testDeleteByIdWithNotFoundPatient(){
+        @DisplayName("попытка удалить несуществующего пациента")
+        public void testDeleteByIdWithNotFoundPatient() {
             when(patientRepository.findById(actualPatientDto.getId())).thenReturn(Optional.empty());
 
-            var exception = assertThrows(NotFoundException.class, ()-> patientService.deleteById(actualPatientDto.getId()));
+            var exception = assertThrows(NotFoundException.class, () -> patientService.deleteById(actualPatientDto.getId()));
 
             assertEquals(String.format("Patient with id %s not found", actualPatient.getId()), exception.getMessage());
         }
-
-        @Test
-        @DisplayName("update() с отсутствующим пациентом")
-        public void testUpdateWithNotFoundPatient(){
-            when(patientRepository.findById(actualPatientDto.getId())).thenReturn(Optional.empty());
-
-            var exception = assertThrows(NotFoundException.class, ()-> patientService.update(actualPatientDto));
-
-            assertEquals(String.format("Patient with id %s not found", actualPatient.getId()), exception.getMessage());
-        }
-
-        @Test
-        @DisplayName("getById() с отсутствующим пациентом")
-        public void testGetByIdWithNotFoundUser(){
-            when(patientRepository.findById(actualPatient.getId())).thenReturn(Optional.empty());
-
-            var exception = assertThrows(NotFoundException.class, ()-> patientService.getById(actualPatient.getId()));
-
-            assertEquals(String.format("Patient with id %s not found", actualPatient.getId()), exception.getMessage());
-        }
-
-
     }
 }

@@ -5,6 +5,7 @@ import MedicalService.demo.mapper.disease.DiseaseMapper;
 import MedicalService.demo.model.dto.disease.DiseaseDto;
 import MedicalService.demo.model.entity.disease.Disease;
 import MedicalService.demo.repository.DiseaseRepository;
+import MedicalService.demo.service.patient.PatientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class DiseaseServiceImpl implements DiseaseService{
 
     private final DiseaseRepository diseaseRepository;
+    private final PatientService patientService;
     private final DiseaseMapper diseaseMapper;
 
     @Override
@@ -27,6 +29,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 
     @Override
     public DiseaseDto create(DiseaseDto diseaseDto, long patientId){
+        patientService.getById(patientId);
         diseaseDto.setPatientId(patientId);
         Disease disease = diseaseRepository.save(diseaseMapper.toEntity(diseaseDto));
 
@@ -46,7 +49,7 @@ public class DiseaseServiceImpl implements DiseaseService{
 
     @Override
     public void deleteByIdAndPatientId(long diseaseId, long patientId) {
-        Disease disease = findDiseaseByIdAndPatientId(diseaseId, patientId);
+        findDiseaseByIdAndPatientId(diseaseId, patientId);
         diseaseRepository.deleteById(diseaseId);
 
         log.info("A disease with an id {} in the patient with id {} has been deleted", diseaseId, patientId);

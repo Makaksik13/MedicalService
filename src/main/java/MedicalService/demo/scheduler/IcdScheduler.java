@@ -26,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 @RequiredArgsConstructor
-//@Async("ICDExecutor")
+@Async("ICDExecutor")
 @Component
 public class IcdScheduler {
 

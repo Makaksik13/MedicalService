@@ -3,10 +3,12 @@ package MedicalService.demo.model.dto.icd;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Schema(description = "Сущность МКБ-10 кода болезни")
 @Data
+@AllArgsConstructor
 public class IcdDto {
 
     @Schema(description = "Код", example = "A01.0")
